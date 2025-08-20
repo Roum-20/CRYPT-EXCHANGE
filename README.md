@@ -37,7 +37,10 @@ This is a simulation app for educational purposes only. Do not use real funds or
 ---
 ## Developer
 Akshya kumar sahoo
+
 Partha sarathi rout
+
 Sameer raj panda
+
 Roumya Ranjan Swain
 
