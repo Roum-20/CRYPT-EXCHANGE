@@ -1,7 +1,6 @@
 # Crypto Exchange Simulator
 
-A simple cryptocurrency exchange simulator built with Python and Streamlit.  
-Designed for learning and prototyping crypto trading features.
+A simple cryptocurrency exchange simulator built with Python and Streamlit.Designed for learning and prototyping crypto trading features.
 ---
 ## Features
 - User registration and login
