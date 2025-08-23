@@ -35,11 +35,5 @@ A simple cryptocurrency exchange simulator built with Python and Streamlit.Desig
 This is a simulation app for educational purposes only. Do not use real funds or sensitive info.
 ---
 ## Developer
-Akshya kumar sahoo
-
-Partha sarathi rout
-
-Sameer raj panda
-
-Roumya Ranjan Swain
+Roumya Ranjan Swain 
 
