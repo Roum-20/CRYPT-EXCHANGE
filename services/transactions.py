@@ -60,4 +60,4 @@ def sell_crypto(user_id, symbol, amount):
         conn.rollback()
         return False, "Sell transaction failed."
     finally:
-        conn.close()  this show tranction failed
+        conn.close()
