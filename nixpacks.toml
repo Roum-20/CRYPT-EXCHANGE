@@ -1,5 +1,9 @@
 [phases.setup]
-nixPkgs = ["nodejs_20", "npm-9_x", "python3", "gcc", "gnumake"]
+nixPkgs = ["python3", "gcc", "gnumake"]
+
+[phases.install]
+dependsOn = ["setup"]
+cmds = ["npm install"]
 
 [start]
-cmd = "npm start"
+cmd = "node server.js"
