@@ -1,7 +1,15 @@
 const Database = require('better-sqlite3');
 const path = require('path');
+const fs = require('fs');
 
-const dbPath = path.join(__dirname, 'cryptexchange.db');
+// On Railway/production, use /tmp for writable storage.
+// On local dev, use the db/ directory.
+const isProduction = process.env.NODE_ENV === 'production' || process.env.RAILWAY_ENVIRONMENT;
+const dbDir = isProduction ? '/tmp' : __dirname;
+if (!fs.existsSync(dbDir)) fs.mkdirSync(dbDir, { recursive: true });
+
+const dbPath = path.join(dbDir, 'cryptexchange.db');
+console.log(`📂 Database path: ${dbPath}`);
 const db = new Database(dbPath);
 
 // Enable WAL mode for better concurrent reads
