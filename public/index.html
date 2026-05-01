@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Crypt-Exchange - Real cryptocurrency trading platform powered by exchange APIs.">
+  <title>Crypt-Exchange | Real Crypto Trading</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💎</text></svg>">
+</head>
+<body>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- ===== AUTH SCREEN ===== -->
+  <div id="authScreen" class="auth-container">
+    <div class="auth-card">
+      <div class="auth-logo">
+        <h1>💎 Crypt-Exchange</h1>
+        <p>Real crypto trading, powered by exchange APIs</p>
+      </div>
+      <div class="error-msg" id="authError"></div>
+
+      <!-- Login Form -->
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="loginUsername">Username or Email</label>
+          <input type="text" id="loginUsername" placeholder="Enter username or email">
+        </div>
+        <div class="form-group">
+          <label for="loginPassword">Password</label>
+          <input type="password" id="loginPassword" placeholder="Enter password">
+        </div>
+        <button type="submit" class="btn btn-primary">Sign In</button>
+      </form>
+
+      <!-- Register Form -->
+      <form id="registerForm" style="display:none">
+        <div class="form-group">
+          <label for="regFullName">Full Name</label>
+          <input type="text" id="regFullName" placeholder="John Doe">
+        </div>
+        <div class="form-group">
+          <label for="regUsername">Username</label>
+          <input type="text" id="regUsername" placeholder="johndoe">
+        </div>
+        <div class="form-group">
+          <label for="regEmail">Email</label>
+          <input type="email" id="regEmail" placeholder="john@example.com">
+        </div>
+        <div class="form-group">
+          <label for="regPassword">Password</label>
+          <input type="password" id="regPassword" placeholder="Min 6 characters" minlength="6">
+        </div>
+        <button type="submit" class="btn btn-primary">Create Account</button>
+      </form>
+
+      <div class="auth-switch" id="authSwitch">
+        Don't have an account? <a onclick="toggleAuthForm()">Sign Up</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== MAIN APP ===== -->
+  <div id="appScreen" style="display:none">
+    <!-- Mobile Header -->
+    <div class="mobile-header">
+      <button class="hamburger" onclick="toggleSidebar()">☰</button>
+      <h2 style="font-size:16px;font-weight:700;background:var(--gradient-1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Crypt-Exchange</h2>
+      <div style="width:24px"></div>
+    </div>
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+    <div class="app-layout">
+      <!-- Sidebar -->
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-logo">
+          <h2>💎 Crypt-Exchange</h2>
+          <span>LIVE TRADING</span>
+        </div>
+        <nav class="sidebar-nav">
+          <button class="nav-item active" data-page="dashboard" onclick="navigateTo('dashboard')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+            Dashboard
+          </button>
+          <button class="nav-item" data-page="market" onclick="navigateTo('market')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            Market
+          </button>
+          <button class="nav-item" data-page="portfolio" onclick="navigateTo('portfolio')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+            Portfolio
+          </button>
+          <button class="nav-item" data-page="wallet" onclick="navigateTo('wallet')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+            Wallet
+          </button>
+          <button class="nav-item" data-page="transactions" onclick="navigateTo('transactions')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            Transactions
+          </button>
+          <button class="nav-item" data-page="settings" onclick="navigateTo('settings')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            Settings
+          </button>
+        </nav>
+        <div class="sidebar-footer">
+          <div class="user-info">
+            <div class="user-avatar" id="userAvatar">U</div>
+            <div>
+              <div class="name" id="userName">User</div>
+              <div class="email" id="userEmail">user@email.com</div>
+            </div>
+          </div>
+          <button class="nav-item" onclick="logout()" style="margin-top:8px;color:var(--red)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            Sign Out
+          </button>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <!-- Exchange Status Banner -->
+        <div id="exchangeBanner" class="exchange-banner" style="display:none">
+          <div class="banner-content">
+            <span>⚠️ No exchange connected. <a onclick="navigateTo('settings')" style="color:var(--accent);cursor:pointer;font-weight:600">Connect your exchange</a> to start real trading.</span>
+          </div>
+        </div>
+
+        <!-- Dashboard Page -->
+        <div class="page active" id="page-dashboard">
+          <div class="page-header">
+            <h1>Dashboard</h1>
+            <p>Welcome back! Here's your live trading overview.</p>
+          </div>
+          <div class="stats-grid" id="dashStats"></div>
+          <div class="data-card">
+            <div class="data-card-header">
+              <h3>🔥 Top Movers</h3>
+              <span style="font-size:13px;color:var(--text-muted)" id="lastUpdated"></span>
+            </div>
+            <div style="overflow-x:auto">
+              <table>
+                <thead><tr><th>Coin</th><th>Price</th><th>24h Change</th><th>7d Chart</th><th>Action</th></tr></thead>
+                <tbody id="dashTopMovers"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Market Page -->
+        <div class="page" id="page-market">
+          <div class="page-header">
+            <h1>Market</h1>
+            <p>Live cryptocurrency prices — trade with real money</p>
+          </div>
+          <div class="data-card">
+            <div class="data-card-header">
+              <h3>All Cryptocurrencies</h3>
+              <input type="text" class="search-input" id="marketSearch" placeholder="Search coins..." oninput="filterMarket()">
+            </div>
+            <div style="overflow-x:auto">
+              <table>
+                <thead><tr><th>#</th><th>Coin</th><th>Price</th><th>1h</th><th>24h</th><th>7d</th><th>Market Cap</th><th>Volume (24h)</th><th>7d Chart</th><th>Trade</th></tr></thead>
+                <tbody id="marketTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Portfolio Page -->
+        <div class="page" id="page-portfolio">
+          <div class="page-header">
+            <h1>Portfolio</h1>
+            <p>Your real crypto holdings and performance</p>
+          </div>
+          <div style="margin-bottom:16px">
+            <button class="btn btn-sm btn-secondary" onclick="syncPortfolio()">🔄 Sync from Exchange</button>
+          </div>
+          <div class="stats-grid" id="portfolioStats"></div>
+          <div id="exchangeBalanceCard" style="display:none"></div>
+          <div class="data-card">
+            <div class="data-card-header">
+              <h3>Your Holdings</h3>
+            </div>
+            <div id="holdingsList" style="padding:8px"></div>
+          </div>
+        </div>
+
+        <!-- Wallet Page -->
+        <div class="page" id="page-wallet">
+          <div class="page-header">
+            <h1>Wallet</h1>
+            <p>Your exchange USDT balance and bank accounts</p>
+          </div>
+          <div class="wallet-grid">
+            <div class="wallet-balance-card">
+              <div class="label">USDT Balance (Exchange)</div>
+              <div class="amount" id="walletBalance">$0.00</div>
+              <div style="font-size:12px;opacity:0.7;margin-top:8px">Deposits & withdrawals are managed on your exchange</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <div class="stat-card" style="flex:1">
+                <div class="label">Total Bought</div>
+                <div class="value" id="totalDeposits" style="font-size:20px">$0.00</div>
+              </div>
+              <div class="stat-card" style="flex:1">
+                <div class="label">Total Sold</div>
+                <div class="value" id="totalWithdrawals" style="font-size:20px">$0.00</div>
+              </div>
+            </div>
+          </div>
+          <div class="data-card">
+            <div class="data-card-header">
+              <h3>💱 Exchange Balances</h3>
+              <button class="btn btn-sm btn-secondary" onclick="loadWallet()">🔄 Refresh</button>
+            </div>
+            <div id="exchangeBalancesList" style="padding:16px"></div>
+          </div>
+        </div>
+
+        <!-- Transactions Page -->
+        <div class="page" id="page-transactions">
+          <div class="page-header">
+            <h1>Transactions</h1>
+            <p>Complete history of your real trades</p>
+          </div>
+          <div class="data-card">
+            <div class="data-card-header">
+              <h3>Transaction History</h3>
+            </div>
+            <div style="overflow-x:auto">
+              <table>
+                <thead><tr><th>Type</th><th>Asset</th><th>Quantity</th><th>Price</th><th>Total</th><th>Exchange</th><th>Date</th></tr></thead>
+                <tbody id="txnTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Settings Page -->
+        <div class="page" id="page-settings">
+          <div class="page-header">
+            <h1>Settings</h1>
+            <p>Connect your exchange to enable real trading</p>
+          </div>
+
+          <div class="data-card" style="margin-bottom:24px">
+            <div class="data-card-header">
+              <h3>🔗 Exchange Connection</h3>
+              <div id="connectionStatus"></div>
+            </div>
+            <div style="padding:20px">
+              <div id="exchangeConnectedInfo" style="display:none"></div>
+              <div id="exchangeConnectForm">
+                <div style="background:var(--bg-input);border-radius:var(--radius-sm);padding:16px;margin-bottom:20px;border-left:3px solid var(--yellow)">
+                  <strong style="color:var(--yellow)">⚠️ Important:</strong>
+                  <p style="color:var(--text-secondary);font-size:13px;margin-top:6px">
+                    Your API keys are stored locally on this server. For security, create API keys with <strong>trade-only</strong> permissions (no withdrawal access). 
+                    Never share your API secret with anyone.
+                  </p>
+                </div>
+                <div class="form-group">
+                  <label>Exchange</label>
+                  <select id="exchangeSelect">
+                    <option value="">Select an exchange...</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>API Key</label>
+                  <input type="text" id="apiKeyInput" placeholder="Paste your API key">
+                </div>
+                <div class="form-group">
+                  <label>API Secret</label>
+                  <input type="password" id="apiSecretInput" placeholder="Paste your API secret">
+                </div>
+                <div class="form-group" style="display:flex;align-items:center;gap:8px">
+                  <input type="checkbox" id="testnetToggle" style="width:auto">
+                  <label for="testnetToggle" style="margin:0;cursor:pointer">Use Testnet / Sandbox Mode (for testing with fake money)</label>
+                </div>
+                <button class="btn btn-primary" onclick="connectExchange()" id="connectBtn" style="width:100%">Connect Exchange</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="data-card">
+            <div class="data-card-header">
+              <h3>ℹ️ How to Get API Keys</h3>
+            </div>
+            <div style="padding:20px;color:var(--text-secondary);font-size:14px;line-height:1.8">
+              <p><strong style="color:var(--text-primary)">Binance:</strong> Account → API Management → Create API → Enable Spot Trading</p>
+              <p><strong style="color:var(--text-primary)">Coinbase:</strong> Settings → API → New API Key → Select permissions</p>
+              <p><strong style="color:var(--text-primary)">Kraken:</strong> Security → API → Add Key → Enable trading</p>
+              <p><strong style="color:var(--text-primary)">KuCoin:</strong> Account → API Management → Create API → Trade permission</p>
+              <p><strong style="color:var(--text-primary)">Bybit:</strong> Account → API → Create New Key → Read + Trade</p>
+              <div style="margin-top:12px;padding:12px;background:var(--green-bg);border-radius:var(--radius-sm);color:var(--green);font-size:13px">
+                💡 <strong>Tip:</strong> Always restrict API keys to trading only. Never enable withdrawal permissions.
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- ===== TRADE MODAL ===== -->
+  <div class="modal-overlay" id="tradeModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="tradeModalTitle">Trade Bitcoin</h3>
+        <button class="modal-close" onclick="closeTradeModal()">&times;</button>
+      </div>
+      <div style="background:var(--red-bg);border:1px solid rgba(239,68,68,0.2);border-radius:var(--radius-sm);padding:10px;margin-bottom:12px;font-size:12px;color:var(--red)">
+        ⚡ LIVE TRADE — This will execute a real market order on your exchange
+      </div>
+      <div class="tabs">
+        <button class="tab-btn active" onclick="setTradeType('buy',this)">Buy</button>
+        <button class="tab-btn" onclick="setTradeType('sell',this)">Sell</button>
+      </div>
+      <div id="tradeInfo" style="margin-bottom:16px"></div>
+      <div class="form-group">
+        <label>Amount (USDT)</label>
+        <input type="number" id="tradeAmount" placeholder="Enter amount in USDT" min="0" step="0.01" oninput="updateTradePreview()">
+      </div>
+      <div id="tradePreview" style="background:var(--bg-input);border-radius:var(--radius-sm);padding:14px;margin-bottom:16px;font-size:13px;color:var(--text-secondary)"></div>
+      <button class="btn btn-primary" id="tradeSubmitBtn" onclick="executeTrade()">Confirm Trade</button>
+    </div>
+  </div>
+
+  <script src="/js/app.js"></script>
+</body>
+</html>

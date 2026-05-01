@@ -1,0 +1,5 @@
+node_modules/
+db/cryptexchange.db
+.env
+*.db-shm
+*.db-wal
